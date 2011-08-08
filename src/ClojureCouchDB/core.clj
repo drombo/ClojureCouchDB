@@ -4,7 +4,23 @@
 
 (def db (Database. "localhost" "sbrdb"))
 
-(def adoc (doto (java.util.HashMap.) (.put "k1" "v1") (.put "k2" "v2")))
 
-(.createDocument db adoc)
+
+; prints all files
+(import 'java.io.File)
+(defn walk [dirpath]
+  (doseq [file (file-seq (File. dirpath))]
+    (println (.getPath file))
+
+    (.createDocument db
+      (doto (java.util.HashMap.)
+        (.put "name" (.getName file))
+        (.put "size" (.length file))
+        (.put "path" (.getPath file))
+        )
+      )
+    )
+  )
+
+(walk "/Users/sbr/Tools")
 
