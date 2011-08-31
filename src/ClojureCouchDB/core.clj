@@ -4,12 +4,11 @@
 
 (def db (Database. "localhost" "sbrdb"))
 
-
-
 ; prints all files
 (import 'java.io.File)
 (defn walk [dirpath]
   (doseq [file (file-seq (File. dirpath))]
+
     (println (.getPath file))
 
     (.createDocument db
